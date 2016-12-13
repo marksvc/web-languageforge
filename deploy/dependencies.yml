@@ -32,6 +32,7 @@
         - postfix
         - unzip
         - p7zip-full
+        - openssh-server
 
     - file: src=/usr/bin/nodejs dest=/usr/local/bin/node state=link
 
@@ -245,6 +246,29 @@
     #  args:
     #    chdir: "{{lf_path}}"
     #    creates: "{{lf_path}}/node_modules/"
+
+    - name: Create SSH key
+      become: no
+      user:
+        name: {{ansible_user}}
+        generate_ssh_key: yes
+        ssh_key_passphrase: yes
+        ssh_key_bits: 2048
+        ssh_key_file: .ssh/id_rsa
+
+    - name: Add authorized key
+      become: yes
+      authorized_key:
+        user=root
+        key="{{lookup('file', '/home/{{ansible_user}}/.ssh/id_rsa.pub') }}"
+
+    - name: set permissions of SSH directory
+      become: yes
+      file: path=/root/.ssh state=directory mode=700
+
+    -name: set permissions of key
+      become: yes
+      file: path=/root/.ssh/authorized_keys state=file mode=400
 
   handlers:
     - name: restart mongodb
