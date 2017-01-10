@@ -81,4 +81,14 @@ class SilexSessionHelper
         }
         return $projectId;
     }
+
+    public static function requireSystemAdmin(Application $app) {
+        $userId = self::getUserId($app);
+        if ($userId) {
+            $user = new UserModel($userId);
+            if ($user->role != SystemRoles::SYSTEM_ADMIN) {
+                $app->abort(403, 'User is not system admin.  Access Denied.');
+            }
+        }
+    }
 }

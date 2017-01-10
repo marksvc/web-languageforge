@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('siteadmin', [
+angular.module('systemadmin', [
   'ngRoute', 'sfAdmin.filters', 'sfAdmin.services', 'sfAdmin.directives', 'bellows.services',
   'palaso.ui.listview', 'palaso.ui.typeahead', 'palaso.ui.notice', 'ui.bootstrap', 'palaso.ui.utils'
 ])

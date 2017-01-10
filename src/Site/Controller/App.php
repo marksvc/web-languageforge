@@ -52,6 +52,10 @@ class App extends Base
             }
         }
 
+        if ($appModel->requireAdmin) {
+            SilexSessionHelper::requireSystemAdmin($app);
+        }
+
         $app['session']->set('projectId', $projectId);
         $this->_projectId = $projectId;
 
@@ -145,6 +149,11 @@ class AppModel {
     public $requireProject;
 
     /**
+     * @var bool
+     */
+    public $requireAdmin;
+
+    /**
      * AppModel constructor
      * @param $appName string
      * @param $projectId string
@@ -225,6 +234,7 @@ class AppModel {
         $this->isBellows = $isBellows;
         $this->bellowsFolder = $bellowsFolder;
         $this->requireProject = $this->isProjectContextRequired($appName);
+        $this->requireAdmin = $this->isSystemAdminRequired($appName);
     }
 
     private function isProjectContextRequired($appName) {
@@ -240,6 +250,14 @@ class AppModel {
         }
     }
 
+    private function isSystemAdminRequired($appName) {
+        switch ($appName) {
+            case "systemadmin":
+                return true;
+            default:
+                return false;
+        }
+    }
     private function isAppBootstrap4($appName, $website) {
 
         // replace "appName" with the name of the angular app that has been migrated to bootstrap 4

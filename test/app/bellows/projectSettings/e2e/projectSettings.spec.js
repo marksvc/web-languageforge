@@ -5,7 +5,7 @@ describe('Bellows E2E Project Settings App', function () {
   var util           = require('../../pages/util.js');
   var loginPage      = require('../../pages/loginPage.js');
   var projectsPage   = require('../../pages/projectsPage.js');
-  var siteAdminPage  = require('../../pages/siteAdminPage.js');
+  var systemAdminPage  = require('../../pages/systemadminPage.js');
   var settingsPage = require('../../pages/projectSettingsPage.js');
 
   it('Normal user cannot access projectSettings to a project of which the user is a member',
@@ -94,17 +94,17 @@ describe('Bellows E2E Project Settings App', function () {
 
   xit('System Admin can re-publish project', function () {
     loginPage.loginAsAdmin();
-    siteAdminPage.get();
-    siteAdminPage.tabs.archivedProjects.click();
-    expect(siteAdminPage.tabs.archivedProjects.republishButton.isDisplayed()).toBe(true);
-    expect(siteAdminPage.tabs.archivedProjects.republishButton.isEnabled()).toBe(false);
-    expect(siteAdminPage.tabs.archivedProjects.deleteButton.isDisplayed()).toBe(true);
-    expect(siteAdminPage.tabs.archivedProjects.deleteButton.isEnabled()).toBe(false);
-    expect(siteAdminPage.tabs.archivedProjects.projectsList.count()).toBe(1);
-    siteAdminPage.tabs.archivedProjects.setCheckbox(0, true);
-    expect(siteAdminPage.tabs.archivedProjects.republishButton.isEnabled()).toBe(true);
-    expect(siteAdminPage.tabs.archivedProjects.deleteButton.isEnabled()).toBe(true);
-    siteAdminPage.tabs.archivedProjects.republishButton.click();
+    systemAdminPage.get();
+    systemAdminPage.tabs.archivedProjects.click();
+    expect(systemAdminPage.tabs.archivedProjects.republishButton.isDisplayed()).toBe(true);
+    expect(systemAdminPage.tabs.archivedProjects.republishButton.isEnabled()).toBe(false);
+    expect(systemAdminPage.tabs.archivedProjects.deleteButton.isDisplayed()).toBe(true);
+    expect(systemAdminPage.tabs.archivedProjects.deleteButton.isEnabled()).toBe(false);
+    expect(systemAdminPage.tabs.archivedProjects.projectsList.count()).toBe(1);
+    systemAdminPage.tabs.archivedProjects.setCheckbox(0, true);
+    expect(systemAdminPage.tabs.archivedProjects.republishButton.isEnabled()).toBe(true);
+    expect(systemAdminPage.tabs.archivedProjects.deleteButton.isEnabled()).toBe(true);
+    systemAdminPage.tabs.archivedProjects.republishButton.click();
     projectsPage.get();
     expect(projectsPage.projectsList.count()).toBe(3);
   }).pend('Archive tab is currently disabled');
@@ -122,17 +122,17 @@ describe('Bellows E2E Project Settings App', function () {
   }).pend('Archive tab is currently disabled');
 
   xit('System Admin can re-publish project', function () {
-    siteAdminPage.get();
-    siteAdminPage.tabs.archivedProjects.click();
-    expect(siteAdminPage.tabs.archivedProjects.republishButton.isDisplayed()).toBe(true);
-    expect(siteAdminPage.tabs.archivedProjects.republishButton.isEnabled()).toBe(false);
-    expect(siteAdminPage.tabs.archivedProjects.deleteButton.isDisplayed()).toBe(true);
-    expect(siteAdminPage.tabs.archivedProjects.deleteButton.isEnabled()).toBe(false);
-    expect(siteAdminPage.tabs.archivedProjects.projectsList.count()).toBe(1);
-    siteAdminPage.tabs.archivedProjects.setCheckbox(0, true);
-    expect(siteAdminPage.tabs.archivedProjects.republishButton.isEnabled()).toBe(true);
-    expect(siteAdminPage.tabs.archivedProjects.deleteButton.isEnabled()).toBe(true);
-    siteAdminPage.tabs.archivedProjects.republishButton.click();
+    systemAdminPage.get();
+    systemAdminPage.tabs.archivedProjects.click();
+    expect(systemAdminPage.tabs.archivedProjects.republishButton.isDisplayed()).toBe(true);
+    expect(systemAdminPage.tabs.archivedProjects.republishButton.isEnabled()).toBe(false);
+    expect(systemAdminPage.tabs.archivedProjects.deleteButton.isDisplayed()).toBe(true);
+    expect(systemAdminPage.tabs.archivedProjects.deleteButton.isEnabled()).toBe(false);
+    expect(systemAdminPage.tabs.archivedProjects.projectsList.count()).toBe(1);
+    systemAdminPage.tabs.archivedProjects.setCheckbox(0, true);
+    expect(systemAdminPage.tabs.archivedProjects.republishButton.isEnabled()).toBe(true);
+    expect(systemAdminPage.tabs.archivedProjects.deleteButton.isEnabled()).toBe(true);
+    systemAdminPage.tabs.archivedProjects.republishButton.click();
     projectsPage.get();
     expect(projectsPage.projectsList.count()).toBe(3);
   }).pend('Archive tab is currently disabled');

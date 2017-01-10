@@ -1,11 +1,11 @@
 'use strict';
 
-module.exports = new SiteAdminPage();
+module.exports = new SystemAdminPage();
 
-function SiteAdminPage() {
+function SystemAdminPage() {
   var util = require('./util.js');
 
-  this.url = browser.baseUrl + '/app/siteadmin';
+  this.url = browser.baseUrl + '/app/systemadmin';
   this.get = function get() {
     // todo: refactor this to be a click recipe (as a user would click on the menu to navigate)
     browser.get(this.url);
