@@ -1,5 +1,7 @@
 'use strict';
 
+var webpackConfig = require('../../webpack.config')();
+
 // Karma configuration
 module.exports = function (config) {
   config.set({
@@ -8,18 +10,7 @@ module.exports = function (config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'src/angular-app/**/*.ts'
-
-      // exclude sfchecks tests for now since they aren't working - IJH 2017-08
-      // 'node_modules/angular/angular.js',
-      // 'node_modules/angular-route/angular-route.js',
-      // 'node_modules/angular-sanitize/angular-sanitize.js',
-      // 'node_modules/angular-mocks/angular-mocks.js',
-      // 'node_modules/ng-file-upload/dist/ng-file-upload.js',
-      // 'node_modules/jquery/dist/jquery.js',
-      // 'node_modules/angular-ui-bootstrap/dist/*ui-bootstrap*.js',
-      // 'src/angular-app/**/*.js',
-      // 'test/app/**/unit/*.spec.js'
+      'src/angular-app/**/*.spec.ts'
     ],
 
     // list of files to exclude
@@ -28,6 +19,7 @@ module.exports = function (config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
+      'src/angular-app/**/*.spec.ts': ['webpack'],
       '**/*.ts': ['karma-typescript']
     },
 
@@ -35,6 +27,17 @@ module.exports = function (config) {
       tsconfig: './tsconfig.json',
       reports: {
         html: 'test/CodeCoverage/typescript/'
+      }
+    },
+
+    webpack: {
+      module: webpackConfig.module,
+      resolve: webpackConfig.resolve
+    },
+    webpackMiddleware: {
+      noInfo: true,
+      stats: {
+        chunks: false
       }
     },
 
