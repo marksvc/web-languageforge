@@ -10,7 +10,7 @@ module.exports = function (config) {
 
     // list of files / patterns to load in the browser
     files: [
-      { pattern: 'src/angular-app/**/*.spec.ts' }
+      { pattern: 'src/angular-app/**/*.spec.ts', watched: false }
     ],
 
     // list of files to exclude
@@ -24,22 +24,27 @@ module.exports = function (config) {
 
     webpack: {
       module: webpackConfig.module,
+
+      // plugins: webpackConfig.plugins,
       resolve: webpackConfig.resolve
     },
     webpackMiddleware: {
       noInfo: true,
-      stats: {
-        chunks: false
-      }
-    },
-
-    mime: {
-      'text/x-typescript': ['ts', 'tsx']
+      stats: 'errors-only'
     },
 
     // test results reporter to use
     // possible values: dots || progress || growl
-    reporters: ['progress'],
+    reporters: ['progress', 'coverage'],
+
+    coverageReporter: {
+      dir: './test/CodeCoverage/typescript/',
+      reporters: [
+        { type: 'html', subdir: 'html' },
+        { type: 'text', subdir: '.', file: 'text.txt' },
+        { type: 'text-summary', subdir: '.', file: 'text-summary.txt' }
+      ]
+    },
 
     // web server port
     port: 8080,

@@ -4,7 +4,6 @@ var LiveReloadPlugin = require('webpack-livereload-plugin');
 var webpack = require('webpack');
 var webpackMerge = require('webpack-merge');
 
-// Webpack Config
 var webpackConfig = {
   entry: {},
 
