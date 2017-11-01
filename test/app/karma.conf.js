@@ -6,11 +6,12 @@ var webpackConfig = require('../../webpack.config');
 module.exports = function (config) {
   config.set({
     basePath: '../..',
-    frameworks: ['jasmine', 'karma-typescript'],
+    frameworks: ['jasmine'],
 
     // list of files / patterns to load in the browser
     files: [
-      'src/angular-app/**/*.spec.ts'
+      'node_modules/angular-mocks/angular-mocks.js',
+      { pattern: './test/app/spec-bundle.js', watched: false }
     ],
 
     // list of files to exclude
@@ -19,15 +20,7 @@ module.exports = function (config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'src/angular-app/**/*.spec.ts': ['webpack'],
-      '**/*.ts': ['karma-typescript']
-    },
-
-    karmaTypescriptConfig: {
-      tsconfig: './tsconfig.json',
-      reports: {
-        html: 'test/CodeCoverage/typescript/'
-      }
+      './test/app/spec-bundle.js': ['coverage', 'webpack', 'sourcemap']
     },
 
     webpack: {
@@ -35,15 +28,13 @@ module.exports = function (config) {
       resolve: webpackConfig.resolve
     },
     webpackMiddleware: {
-      noInfo: true,
-      stats: {
-        chunks: false
-      }
+      noInfo: false,
+      stats: 'verbose'
     },
 
     // test results reporter to use
     // possible values: dots || progress || growl
-    reporters: ['progress', 'karma-typescript'],
+    reporters: ['progress'],
 
     // web server port
     port: 8080,
@@ -56,7 +47,7 @@ module.exports = function (config) {
 
     // level of logging
     // possible values: LOG_DISABLE || LOG_ERROR || LOG_WARN || LOG_INFO || LOG_DEBUG
-    logLevel: config.LOG_WARN,
+    logLevel: config.LOG_INFO,
 
     // enable / disable watching file and executing tests whenever any file changes
     autoWatch: false,
@@ -69,7 +60,7 @@ module.exports = function (config) {
     // - Safari (only Mac)
     // - PhantomJS
     // - IE (only Windows)
-    browsers: ['Chrome', 'PhantomJS'],
+    browsers: ['Chrome'],
 
     // If browser does not capture in given timeout [ms], kill it
     captureTimeout: 8000,
