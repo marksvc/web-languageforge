@@ -361,6 +361,18 @@ gulp.task('test-js:watch', function (cb) {
 });
 
 // -------------------------------------
+//   Task: test-js:debug
+// -------------------------------------
+gulp.task('test-js:debug', function (cb) {
+  new Server({
+    configFile: __dirname + '/test/app/karma.conf.js',
+    reporters: 'progress',
+    browsers: ['PhantomJS'],
+    singleRun: true
+  }, cb).start();
+});
+
+// -------------------------------------
 //   Task: E2E Test: Webdriver Update
 // -------------------------------------
 gulp.task('test-e2e-webdriver_update', webdriverUpdate);

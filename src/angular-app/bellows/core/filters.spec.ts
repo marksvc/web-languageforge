@@ -1,12 +1,13 @@
 import * as angular from 'angular';
 import 'angular-mocks';
 
+import { CoreModule } from './core.module';
 import { BytesFilter, BytesFilterFunction, RelativeTimeFilter, RelativeTimeFilterFunction } from './filters';
 
 describe('Filters: ', () => {
   let $filter: angular.IFilterService;
 
-  beforeEach(angular.mock.module('coreModule'));
+  beforeEach(angular.mock.module(CoreModule));
 
   beforeEach(angular.mock.inject((_$filter_: angular.IFilterService) => {
       $filter = _$filter_;
