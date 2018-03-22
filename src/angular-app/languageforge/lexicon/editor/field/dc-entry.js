@@ -43,6 +43,19 @@ angular.module('palaso.ui.dc.entry', ['palaso.ui.dc.fieldrepeat', 'palaso.ui.dc.
             }, angular.noop);
         };
 
+        $scope.numSenses = function numSenses() {
+          return $scope.model.senses.length;
+        };
+
+        $scope.moveSense = function (index, distance) {
+          var senses = $scope.model.senses;
+          var sense = senses[index];
+          var newPosition = index + distance;
+          if (newPosition < 0 || newPosition >= senses.length) throw new Error();
+          senses.splice(index, 1); // remove 1 element starting from index
+          senses.splice(newPosition, 0, sense); // insert sense, overwriting 0 elements
+        };
+
         $scope.deleteEntry = function () {
           $scope.control.deleteEntry($scope.control.currentEntry);
         };

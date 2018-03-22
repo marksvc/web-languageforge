@@ -6,7 +6,15 @@
                 <span class="fa fa-ellipsis-v"></span>
             </a>
             <div class="dropdown-menu-right" uib-dropdown-menu>
-                <a href data-ng-click="remove(index)" class="dropdown-item">Delete Meaning {{index+1}}</a>
+                <a href data-ng-click="remove(index)" class="dropdown-item">
+                    <span class="fa fa-trash"></span> Delete Meaning {{index+1}}
+                </a>
+                <a href ng-show="index > 0" data-ng-click="move(index, -1)" class="dropdown-item">
+                    <span class="fa fa-arrow-up"></span> Move Up
+                </a>
+                <a href ng-show="index+1 < numSenses()" data-ng-click="move(index, 1)" class="dropdown-item">
+                    <span class="fa fa-arrow-down"></span> Move Down
+                </a>
             </div>
         </div>
         Meaning <span class="notranslate">{{index+1}}</span>

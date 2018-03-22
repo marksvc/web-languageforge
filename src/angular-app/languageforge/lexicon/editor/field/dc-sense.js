@@ -11,7 +11,9 @@ angular.module('palaso.ui.dc.sense', ['palaso.ui.dc.fieldrepeat', 'palaso.ui.dc.
       config: '=',
       model: '=',
       index: '=',
+      move: '=',
       remove: '=',
+      numSenses: '=',
       control: '='
     },
     controller: ['$scope', '$state', function ($scope, $state) {

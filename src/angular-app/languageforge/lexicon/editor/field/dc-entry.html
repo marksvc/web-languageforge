@@ -22,7 +22,7 @@
     </div>
     <div data-ng-if="config.fields.senses.fieldOrder.length > 0">
         <div data-ng-repeat="sense in model.senses">
-            <dc-sense remove="deleteSense" index="$index"
+            <dc-sense remove="deleteSense" move="moveSense" index="$index" num-senses="numSenses"
                       config="config.fields.senses" model="sense" control="control"></dc-sense>
         </div>
     </div>
