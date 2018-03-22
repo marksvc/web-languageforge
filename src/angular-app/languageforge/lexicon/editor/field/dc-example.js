@@ -9,7 +9,9 @@ angular.module('palaso.ui.dc.example', ['palaso.ui.dc.fieldrepeat'])
       config: '=',
       model: '=',
       index: '=',
+      move: '=',
       remove: '=',
+      numExamples: '=',
       control: '='
     },
     controller: ['$scope', '$state', function ($scope, $state) {
