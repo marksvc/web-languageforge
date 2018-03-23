@@ -261,6 +261,13 @@ export class EditorPage {
 
     senses: element.all(by.css('dc-sense')),
 
+    sense: {
+      actionMenus: this.editDiv.all(by.css('dc-sense .ellipsis-menu-toggle')),
+      deleteSense: this.editDiv.all(by.css('dc-sense .ellipsis-menu-toggle ~ .dropdown-menu fa-trash')),
+      moveUp: this.editDiv.all(by.css('dc-sense .ellipsis-menu-toggle ~ .dropdown-menu .fa-arrow-up')),
+      moveDown: this.editDiv.all(by.css('dc-sense .ellipsis-menu-toggle ~ .dropdown-menu .fa-arrow-down')),
+    },
+
     pictures: {
       list: this.editorUtil.getOneField('Pictures'),
       images: this.editorUtil.getOneField('Pictures').all(by.css('img')),
