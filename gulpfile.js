@@ -139,13 +139,14 @@ gulp.task('sass:watch', function () {
 
 //region webpack
 
-function webpack(applicationName, callback, isProduction, isWatch) {
+function webpack(applicationName, callback, isProduction, isWatch, isAnalyze) {
   var watch = isWatch ? ' --watch' : '';
-  var envApplication = applicationName ? ' --env.applicationName=' + applicationName : '';
   var prod = isProduction ? ' -p' : '';
+  var environ = applicationName ? ' --env.applicationName=' + applicationName : '';
+  environ += isAnalyze ? ' --env.isAnalyze' : '';
   if (!process.env.NOTIFY_RELEASE_STAGES)
     process.env.NOTIFY_RELEASE_STAGES = notifyReleaseStages;
-  execute('$(npm bin)/webpack' + watch + envApplication + prod + ' --colors',
+  execute('$(npm bin)/webpack' + watch + environ + prod + ' --colors',
     { cwd: '.', env: process.env },
     function (err) {
       if (err) throw new gutil.PluginError('webpack', err);
@@ -168,6 +169,13 @@ gulp.task('webpack-lf:watch', function (cb) {
 });
 
 // -------------------------------------
+//   Task: webpack-lf analyze
+// -------------------------------------
+gulp.task('webpack-lf:analyze', function (cb) {
+  webpack('languageforge', cb, false, false, true);
+});
+
+// -------------------------------------
 //   Task: webpack-sf
 // -------------------------------------
 gulp.task('webpack-sf', function (cb) {
@@ -179,6 +187,13 @@ gulp.task('webpack-sf', function (cb) {
 // -------------------------------------
 gulp.task('webpack-sf:watch', function (cb) {
   webpack('scriptureforge', cb, false, true);
+});
+
+// -------------------------------------
+//   Task: webpack-sf analyze
+// -------------------------------------
+gulp.task('webpack-sf:analyze', function (cb) {
+  webpack('scriptureforge', cb, false, false, true);
 });
 
 // endregion
@@ -346,7 +361,7 @@ function runKarmaTests(applicationName, cb, type) {
       break;
   }
 
-  new Server(config, function(err) {
+  new Server(config, function (err) {
     if (err === 0) {
       cb();
     } else {

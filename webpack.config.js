@@ -1,5 +1,6 @@
 'use strict';
 
+var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 var CopyWebpackPlugin = require('copy-webpack-plugin');
 var path = require('path');
 var LiveReloadPlugin = require('webpack-livereload-plugin');
@@ -37,7 +38,7 @@ var webpackConfig = {
     new webpack.DefinePlugin({
       'process.env.XFORGE_BUGSNAG_API_KEY': JSON.stringify(process.env.XFORGE_BUGSNAG_API_KEY
         || 'missing-bugsnag-api-key'),
-      'process.env.NOTIFY_RELEASE_STAGES': process.env.NOTIFY_RELEASE_STAGES,
+      'process.env.NOTIFY_RELEASE_STAGES': process.env.NOTIFY_RELEASE_STAGES
     })
   ],
 
@@ -114,12 +115,17 @@ module.exports = function (env) {
   if (env == null) {
     env = {
       applicationName: 'languageforge',
+      isAnalyze: false,
       isTest: false
     };
   }
 
-  var mainPath = './src/angular-app/' + env.applicationName + '/main' + (env.isTest ? '.specs' : '') + '.ts';
-  webpackConfig.entry.main = mainPath;
+  if (env.isAnalyze) {
+    webpackConfig.plugins.push(new BundleAnalyzerPlugin({ analyzerMode: 'static' }));
+  }
+
+  webpackConfig.entry.main = './src/angular-app/' + env.applicationName + '/main' +
+    (env.isTest ? '.specs' : '') + '.ts';
 
   if (env.isTest) {
     webpackConfig.devtool = false;
@@ -144,6 +150,7 @@ module.exports = function (env) {
           );
         }
       }),
+
       // CommonChunksPlugin will now extract all the common modules from vendor and main bundles
       new webpack.optimize.CommonsChunkPlugin({
         name: 'manifest'
@@ -152,5 +159,6 @@ module.exports = function (env) {
     ];
     webpackConfig.plugins = webpackConfig.plugins.concat(plugins);
   }
+
   return webpackMerge(defaultConfig, webpackConfig);
 };
