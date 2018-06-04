@@ -5,6 +5,7 @@ namespace Site\Controller;
 use Api\Library\Shared\Palaso\Exception\UserUnauthorizedException;
 use Api\Library\Shared\SilexSessionHelper;
 use Api\Library\Shared\Website;
+use Api\Model\Shared\ProjectModel;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -40,6 +41,7 @@ class App extends Base
      * @param string $projectId
      * @throws UserUnauthorizedException
      * @throws AppNotFoundException
+     * @throws \Exception
      */
     public function setupAngularAppVariables(Application $app, $appName, $projectId = '')
     {
@@ -91,6 +93,13 @@ class App extends Base
         }
 
         $interfaceLanguageCode = 'en';
+        if ($projectId) {
+            $project = ProjectModel::getById($projectId);
+            if ($project->interfaceLanguageCode) {
+                $interfaceLanguageCode = $project->interfaceLanguageCode;
+            }
+        }
+
         $semDomFilePath = $appModel->siteFolder . '/core/semantic-domains/semantic-domains.' . $interfaceLanguageCode .
             '.generated-data.js';
         if (file_exists($semDomFilePath)) {
